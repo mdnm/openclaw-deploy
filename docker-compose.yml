@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  gateway:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw-gateway
+    network_mode: host
+    user: "1000:1000"
+    restart: unless-stopped
+    command: gateway --bind loopback --port 18789
+    environment:
+      - OPENCLAW_GATEWAY_PASSWORD=${OPENCLAW_GATEWAY_PASSWORD}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+    volumes:
+      - /home/openclaw/.openclaw:/home/node/.openclaw
+      - /var/log/openclaw:/var/log/openclaw
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:18789/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  openclaw-cli:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw-cli
+    network_mode: host
+    user: "1000:1000"
+    profiles:
+      - cli
+    stdin_open: true
+    tty: true
+    entrypoint: openclaw
+    environment:
+      - OPENCLAW_GATEWAY_PASSWORD=${OPENCLAW_GATEWAY_PASSWORD}
+    volumes:
+      - /home/openclaw/.openclaw:/home/node/.openclaw
+      - /var/log/openclaw:/var/log/openclaw

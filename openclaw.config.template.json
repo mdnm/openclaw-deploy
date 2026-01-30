@@ -1,0 +1,36 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "loopback",
+    "port": 18789,
+    "auth": {
+      "mode": "password"
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "dmPolicy": "pairing",
+      "groups": {
+        "*": {
+          "requireMention": true,
+          "allowFrom": "pairing"
+        }
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "sandbox": {
+        "mode": "non-main"
+      },
+      "model": {
+        "primary": "openai/codex"
+      }
+    }
+  },
+  "logging": {
+    "redactSensitive": "tools"
+  }
+}
