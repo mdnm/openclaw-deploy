@@ -15,6 +15,10 @@ services:
     environment:
       - OPENCLAW_GATEWAY_PASSWORD=${OPENCLAW_GATEWAY_PASSWORD}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
+      - VERCEL_TOKEN=${VERCEL_TOKEN}
     volumes:
       - /home/openclaw/.openclaw:/home/node/.openclaw
       - /var/log/openclaw:/var/log/openclaw
