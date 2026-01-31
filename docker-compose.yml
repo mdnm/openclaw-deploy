@@ -2,7 +2,11 @@ version: "3.8"
 
 services:
   gateway:
-    image: ghcr.io/openclaw/openclaw:latest
+    build:
+      context: .
+      args:
+        OPENCLAW_DOCKER_APT_PACKAGES: ${OPENCLAW_DOCKER_APT_PACKAGES-}
+    image: openclaw:local
     container_name: openclaw-gateway
     network_mode: host
     user: "1000:1000"
@@ -27,7 +31,7 @@ services:
         max-file: "5"
 
   openclaw-cli:
-    image: ghcr.io/openclaw/openclaw:latest
+    image: openclaw:local
     container_name: openclaw-cli
     network_mode: host
     user: "1000:1000"

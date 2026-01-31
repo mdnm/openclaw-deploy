@@ -199,6 +199,8 @@ chown openclaw:openclaw "${OPENCLAW_HOME}/docker-compose.yml" "${OPENCLAW_HOME}/
 chmod 600 "${OPENCLAW_HOME}/.env"
 
 cd "${OPENCLAW_HOME}"
+# Build so OPENCLAW_DOCKER_APT_PACKAGES (if set) is baked into the image.
+sudo -u openclaw docker compose build
 sudo -u openclaw docker compose up -d
 echo "==> Docker Compose services started."
 
